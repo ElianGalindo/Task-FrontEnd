@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EveryTask</title>
+</head>
+<body>
+  <h2>Formulario de Registro</h2>
+
+  <form id="registerForm" enctype="multipart/form-data">
+    <label>
+      Nombre:
+      <input type="text" name="name" required>
+    </label>
+    <br>
+    <label>
+      Apellido:
+      <input type="text" name="lastname" required>
+    </label>
+    <br>
+    <label>
+      Biografía:
+      <textarea name="bio" rows="3"></textarea>
+    </label>
+    <br>
+    <label>
+      Avatar:
+      <input type="file" name="avatar" accept="image/*">
+    </label>
+    <br>
+    <label>
+      Email:
+      <input type="email" name="email" required>
+    </label>
+    <br>
+    <label>
+      Contraseña:
+      <input type="password" name="password" required>
+    </label>
+    <br><br>
+    <button type="submit">Registrarse</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('registerForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form); // FormData maneja archivos y texto
+      try {
+        const res = await fetch("https://everytasks.onrender.com/auth/register", {
+          method: "POST",
+          body: formData
+          //credentials: "include" // para cookies si tu backend usa httpOnly
+        });
+
+        const data = await res.json();
+        console.log(data);
+        alert(data.message || "Usuario registrado correctamente");
+      } catch (err) {
+        console.error("Error al registrar usuario:", err);
+        alert("Error al registrar usuario");
+      }
+    });
+  </script>
+</body>
+</html>
